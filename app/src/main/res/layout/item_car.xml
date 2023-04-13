@@ -14,7 +14,7 @@
         app:layout_constraintBottom_toBottomOf="@id/hpTextView"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/nameTextView"
+        app:layout_constraintTop_toTopOf="@id/model_text_view"
         tools:ignore="ContentDescription"
         tools:src="@drawable/lancer" />
 
@@ -25,7 +25,7 @@
         android:layout_marginStart="8dp"
         android:text="@string/color"
         app:layout_constraintStart_toEndOf="@+id/carImageView"
-        app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/model_text_view" />
 
     <TextView
         android:id="@+id/maxSpeedHintTextView"
@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/maxSpeedHintTextView" />
 
     <TextView
-        android:id="@+id/nameTextView"
+        android:id="@+id/model_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
@@ -59,11 +59,11 @@
         android:layout_marginStart="4dp"
         android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/colorHintTextView"
-        app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/model_text_view"
         tools:text="black" />
 
     <TextView
-        android:id="@+id/maxSpeedTextView"
+        android:id="@+id/speed_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -79,7 +79,7 @@
         android:layout_marginStart="4dp"
         android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/hpHintTextView"
-        app:layout_constraintTop_toBottomOf="@+id/maxSpeedTextView"
+        app:layout_constraintTop_toBottomOf="@+id/speed_text_view"
         tools:text="175" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -38,11 +38,20 @@ android {
             }
         }
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'com.google.android.material:material:1.8.0'
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
 
     implementation 'androidx.room:room-runtime:2.5.1'
     kapt 'androidx.room:room-compiler:2.5.1'
