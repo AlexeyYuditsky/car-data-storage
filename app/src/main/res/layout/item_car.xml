@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/recycler_padding">
+
+    <ImageView
+        android:id="@+id/carImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@id/hpTextView"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/nameTextView"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/lancer" />
+
+    <TextView
+        android:id="@+id/colorHintTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/color"
+        app:layout_constraintStart_toEndOf="@+id/carImageView"
+        app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+
+    <TextView
+        android:id="@+id/maxSpeedHintTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/maxSpeed"
+        app:layout_constraintStart_toStartOf="@+id/colorHintTextView"
+        app:layout_constraintTop_toBottomOf="@+id/colorHintTextView" />
+
+    <TextView
+        android:id="@+id/hpHintTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hp"
+        app:layout_constraintStart_toStartOf="@+id/colorHintTextView"
+        app:layout_constraintTop_toBottomOf="@+id/maxSpeedHintTextView" />
+
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_constraintStart_toStartOf="@+id/colorHintTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Mitsubishi Lancer" />
+
+    <TextView
+        android:id="@+id/colorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/colorHintTextView"
+        app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+        tools:text="black" />
+
+    <TextView
+        android:id="@+id/maxSpeedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/maxSpeedHintTextView"
+        app:layout_constraintTop_toBottomOf="@+id/colorTextView"
+        tools:text="200" />
+
+    <TextView
+        android:id="@+id/hpTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/hpHintTextView"
+        app:layout_constraintTop_toBottomOf="@+id/maxSpeedTextView"
+        tools:text="175" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
