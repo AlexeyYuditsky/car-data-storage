@@ -3,6 +3,7 @@ package com.alexeyyuditsky.cardatastorage.presentation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.alexeyyuditsky.cardatastorage.R
+import com.alexeyyuditsky.cardatastorage.presentation.cars.CarsFragment
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 

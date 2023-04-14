@@ -1,11 +1,11 @@
-package com.alexeyyuditsky.cardatastorage.data
+package com.alexeyyuditsky.cardatastorage.data.cars.cache
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "cars",)
-data class CarDbEntity(
+@Entity(tableName = "cars")
+data class CarDb(
     @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "model") val model: String,
     @ColumnInfo(name = "color") val color: String,

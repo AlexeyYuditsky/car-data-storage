@@ -3,4 +3,12 @@
     <string name="color">Color:</string>
     <string name="maxSpeed">Speed:</string>
     <string name="hp">Hp:</string>
+
+    <string name="service_unavailable_message">Service unavailable</string>
+    <string name="no_connection_message">No connection</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="no_cars_found">No cars found</string>
+    <string name="try_again">Try again</string>
+    <string name="sort_by_brand">Sort by brand</string>
+    <string name="filter_by_speed">Filter by speed > 189</string>
 </resources>

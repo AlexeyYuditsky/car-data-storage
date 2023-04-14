@@ -1,9 +1,9 @@
 package com.alexeyyuditsky
 
 import android.app.Application
-import com.alexeyyuditsky.cardatastorage.sl.CarsFactory
-import com.alexeyyuditsky.cardatastorage.sl.CarsModule
-import com.alexeyyuditsky.cardatastorage.sl.CoreModule
+import com.alexeyyuditsky.cardatastorage.sl.cars.CarsFactory
+import com.alexeyyuditsky.cardatastorage.sl.cars.CarsModule
+import com.alexeyyuditsky.cardatastorage.sl.core.CoreModule
 
 class App : Application() {
 

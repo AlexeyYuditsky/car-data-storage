@@ -1,4 +1,4 @@
-package com.alexeyyuditsky.cardatastorage.sl
+package com.alexeyyuditsky.cardatastorage.sl.core
 
 import androidx.lifecycle.ViewModel
 
