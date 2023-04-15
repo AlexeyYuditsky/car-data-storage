@@ -67,12 +67,14 @@ class CarsViewModel(
         }
     }
 
-    fun updateCar(id: Long, model: String, color: String, speed: Int, hp: Int) = viewModelScope.launch(Dispatchers.IO) {
-        interactor.updateCar(UpdateCarTuple(id, model, color, speed, hp))
-    }
+    fun updateCar(id: Long, model: String, color: String, speed: Int, hp: Int, image: String) =
+        viewModelScope.launch(Dispatchers.IO) {
+            interactor.updateCar(UpdateCarTuple(id, model, color, speed, hp, image))
+        }
 
-    fun addNewCar(model: String, color: String, speed: Int, hp: Int) = viewModelScope.launch(Dispatchers.IO) {
-        interactor.newCar(NewCarTuple(0, model, color, speed, hp))
-    }
+    fun addNewCar(model: String, color: String, speed: Int, hp: Int, image: String) =
+        viewModelScope.launch(Dispatchers.IO) {
+            interactor.newCar(NewCarTuple(0, model, color, speed, hp, image))
+        }
 
 }

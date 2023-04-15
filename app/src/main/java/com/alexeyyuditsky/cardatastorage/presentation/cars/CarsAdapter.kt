@@ -9,9 +9,11 @@ import com.alexeyyuditsky.cardatastorage.databinding.ItemCarBinding
 import com.alexeyyuditsky.cardatastorage.databinding.ItemFailBinding
 
 typealias RetryClickListener = () -> Unit
+typealias ImageClickListener = (uri: String) -> Unit
 
 class CarsAdapter(
     private val retryClickListener: RetryClickListener,
+    private val imageClickListener: ImageClickListener,
 ) : RecyclerView.Adapter<CarViewHolder>() {
 
     private val cars = mutableListOf<CarUi>()
@@ -36,7 +38,7 @@ class CarsAdapter(
         return when (viewType) {
             R.layout.item_car -> {
                 val binding = ItemCarBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                CarViewHolder.Base(binding)
+                CarViewHolder.Base(binding, imageClickListener)
             }
             R.layout.item_fail -> {
                 val binding = ItemFailBinding.inflate(LayoutInflater.from(parent.context), parent, false)

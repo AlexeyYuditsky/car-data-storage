@@ -36,6 +36,7 @@ interface CarsCacheDataSource {
         override suspend fun newCar(carTuple: NewCarTuple) {
             room.getCarsDao().newCar(carTuple)
         }
+
     }
 
 }

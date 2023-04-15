@@ -17,4 +17,7 @@
     <string name="enter_speed">Enter speed</string>
     <string name="enter_hp">Enter hp</string>
     <string name="action_cancel">Cancel</string>
+    <string name="new_car">New car</string>
+    <string name="empty_field">Empty field</string>
+    <string name="fill_gaps">Fill in all the fields</string>
 </resources>

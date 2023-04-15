@@ -15,7 +15,7 @@ sealed class CarsDomain : Abstract.DomainToUi<CarsUi> {
 
         override fun map(resourceProvider: ResourceProvider): CarsUi {
             val carUiList = cars.map { car ->
-                CarUi.Base(car.id, car.model, car.color, car.speed, car.hp, null)
+                CarUi.Base(car.id, car.model, car.color, car.speed, car.hp, car.image)
             }
             return CarsUi(carUiList)
         }

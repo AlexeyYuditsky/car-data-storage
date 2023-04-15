@@ -1,9 +1,12 @@
 package com.alexeyyuditsky.cardatastorage.presentation.cars
 
+import android.net.Uri
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.alexeyyuditsky.cardatastorage.R
 import com.alexeyyuditsky.cardatastorage.databinding.ItemCarBinding
 import com.alexeyyuditsky.cardatastorage.databinding.ItemFailBinding
+import com.bumptech.glide.Glide
 
 abstract class CarViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -11,6 +14,7 @@ abstract class CarViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     class Base(
         private val binding: ItemCarBinding,
+        private val listener: ImageClickListener,
     ) : CarViewHolder(binding.root) {
 
         override fun bind(item: CarUi) {
@@ -20,6 +24,15 @@ abstract class CarViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                     binding.colorTextView.text = a[2].toString()
                     binding.speedTextView.text = a[3].toString()
                     binding.hpTextView.text = a[4].toString()
+                    val uri = Uri.parse(a[5].toString())
+                    Glide.with(itemView.context)
+                        .load(uri)
+                        .error(R.drawable.ic_error)
+                        .into(binding.carImageView)
+
+                    binding.carImageView.setOnClickListener {
+                        listener.invoke(uri.toString())
+                    }
                 }
             })
             itemView.tag = item
@@ -51,4 +64,9 @@ abstract class CarViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         view: View,
     ) : CarViewHolder(view)
 
+}
+
+fun main() {
+    val a: String? = null
+    println(a.toString())
 }

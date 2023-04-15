@@ -8,4 +8,6 @@ interface FragmentRouter {
 
     fun showNewCarDialog()
 
+    fun showFullscreenDialog(uri: String)
+
 }

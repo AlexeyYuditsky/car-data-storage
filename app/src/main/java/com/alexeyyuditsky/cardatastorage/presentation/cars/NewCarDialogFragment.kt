@@ -1,40 +1,49 @@
 package com.alexeyyuditsky.cardatastorage.presentation.cars
 
-import android.app.Dialog
-import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
+import android.content.DialogInterface
+import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.fragment.app.DialogFragment
 import com.alexeyyuditsky.cardatastorage.R
-import com.alexeyyuditsky.cardatastorage.databinding.DialogCarBinding
 
-class NewCarDialogFragment : DialogFragment() {
+class NewCarDialogFragment : BaseCarDialogFragment() {
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val binding = DialogCarBinding.inflate(layoutInflater)
+    override fun getTitle(): String {
+        return getString(R.string.new_car)
+    }
 
-        return AlertDialog.Builder(requireContext())
-            .setTitle("adsadsad")
-            .setView(binding.root)
-            .setNegativeButton(R.string.action_cancel, null)
-            .setPositiveButton(R.string.action_confirm) { _, _ ->
-                requireActivity().supportFragmentManager.setFragmentResult(
+    override fun createPositiveListener(): DialogInterface.OnClickListener {
+        return object : DialogInterface.OnClickListener {
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+                val model = binding.modelInputEditText.text.toString()
+                val color = binding.colorInputEditText.text.toString()
+                val speed = binding.speedInputEditText.text.toString()
+                val hp = binding.hpInputEditText.text.toString()
+                val imageUri = if (binding.imageView.tag == null)
+                    ""
+                else
+                    binding.imageView.tag.toString()
+
+                listOf(model, color, speed, hp, imageUri).forEach {
+                    if (it.isBlank()) {
+                        Toast.makeText(requireContext(), R.string.fill_gaps, Toast.LENGTH_SHORT).show()
+                        return
+                    }
+                }
+
+                parentFragmentManager.setFragmentResult(
                     REQUEST_KEY, bundleOf(
-                        KEY_MODEL to binding.modelInputEditText.text.toString(),
-                        KEY_COLOR to binding.colorInputEditText.text.toString(),
-                        KEY_SPEED to binding.speedInputEditText.text.toString().toInt(),
-                        KEY_HP to binding.hpInputEditText.text.toString().toInt(),
+                        KEY_MODEL to model,
+                        KEY_COLOR to color,
+                        KEY_SPEED to speed.toInt(),
+                        KEY_HP to hp.toInt(),
+                        KEY_IMAGE to imageUri
                     )
                 )
             }
-            .create()
+        }
     }
 
     companion object {
-        const val KEY_MODEL = "model"
-        const val KEY_COLOR = "color"
-        const val KEY_SPEED = "speed"
-        const val KEY_HP = "hp"
         const val REQUEST_KEY = "newCarDialogRequestKey"
 
         fun newInstance(): NewCarDialogFragment {

@@ -5,10 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageButton
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="100dp"
+        android:background="?selectableItemBackground"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_add"
         tools:ignore="ContentDescription" />
 

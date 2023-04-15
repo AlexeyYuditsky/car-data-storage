@@ -27,37 +27,74 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
         factoryProducer = { (requireActivity().application as App).carsFactory() }
     )
     private val fragmentRouter get() = (requireActivity() as FragmentRouter)
+
     private var _binding: FragmentCarsBinding? = null
     private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCarsBinding.bind(view)
+        val carsAdapter = setupRecyclerView()
+        carsObserver(carsAdapter)
+        swipeListener(carsAdapter)
+        sortListener()
+        filterListener()
+        editCarDialogListener()
+        newCarDialogListener()
+        floatButtonListener()
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun carsObserver(carsAdapter: CarsAdapter) {
+        viewModel.carsLiveData.observe(viewLifecycleOwner) {
+            carsAdapter.update(it)
+        }
+    }
+
+    private fun sortListener() {
+        binding.sortByBrandCheckBox.setOnClickListener {
+            isSort = binding.sortByBrandCheckBox.isChecked
+            checkBoxObserver()
+        }
+    }
+
+    private fun filterListener() {
+        binding.filterBySpeedCheckBox.setOnClickListener {
+            isFilter = binding.filterBySpeedCheckBox.isChecked
+            checkBoxObserver()
+        }
+    }
+
+    private fun checkBoxObserver() {
+        lifecycleScope.launch {
+            delay(100)
+            if (isSort && isFilter) {
+                viewModel.fetchSortAndFilterByCars()
+            } else if (isSort && !isFilter) {
+                viewModel.fetchSortByBrandCars()
+            } else if (!isSort && isFilter) {
+                viewModel.fetchFilterBySpeedCars()
+            } else if (!isSort && !isFilter) {
+                viewModel.fetchAllCars()
+            }
+        }
+    }
+
+    private fun setupRecyclerView(): CarsAdapter {
         val carsAdapter = CarsAdapter(
             retryClickListener = { viewModel.fetchAllCars() },
+            imageClickListener = { uri: String -> fragmentRouter.showFullscreenDialog(uri) }
         )
+
         binding.recyclerView.adapter = carsAdapter
         binding.recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayout.VERTICAL))
         (binding.recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
 
-        viewModel.carsLiveData.observe(viewLifecycleOwner) {
-            carsAdapter.update(it)
-        }
-
-        binding.sortByBrandCheckBox.setOnClickListener {
-            isSort = binding.sortByBrandCheckBox.isChecked
-            checkVisible()
-        }
-        binding.filterBySpeedCheckBox.setOnClickListener {
-            isFilter = binding.filterBySpeedCheckBox.isChecked
-            checkVisible()
-        }
-
-        swipeListener(carsAdapter)
-        setupEditCarDialogListener()
-        setupNewCarDialogListener()
-        floatButtonListener()
+        return carsAdapter
     }
 
     private fun floatButtonListener() {
@@ -81,7 +118,7 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val car = viewHolder.itemView.tag as? CarUi ?: return
                 fragmentRouter.showEditCarDialog(car)
-                carsAdapter.notifyDataSetChanged()
+                carsAdapter.update(viewModel.carsLiveData.value!!)
             }
 
             override fun onChildDraw(
@@ -104,54 +141,37 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
     }
 
-    private fun checkVisible() {
-        if (isSort && isFilter) {
-            viewModel.fetchSortAndFilterByCars()
-        } else if (isSort && !isFilter) {
-            viewModel.fetchSortByBrandCars()
-        } else if (!isSort && isFilter) {
-            viewModel.fetchFilterBySpeedCars()
-        } else if (!isSort && !isFilter) {
-            viewModel.fetchAllCars()
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun setupEditCarDialogListener() {
-        requireActivity().supportFragmentManager.setFragmentResultListener(
+    private fun editCarDialogListener() {
+        parentFragmentManager.setFragmentResultListener(
             EditCarDialogFragment.REQUEST_KEY, this
         ) { _, result ->
             lifecycleScope.launch {
                 viewModel.updateCar(
-                    id = result.getLong(EditCarDialogFragment.KEY_ID),
-                    model = result.getString(EditCarDialogFragment.KEY_MODEL)!!,
-                    color = result.getString(EditCarDialogFragment.KEY_COLOR)!!,
-                    speed = result.getInt(EditCarDialogFragment.KEY_SPEED),
-                    hp = result.getInt(EditCarDialogFragment.KEY_HP)
+                    id = result.getLong(BaseCarDialogFragment.KEY_ID),
+                    model = result.getString(BaseCarDialogFragment.KEY_MODEL, ""),
+                    color = result.getString(BaseCarDialogFragment.KEY_COLOR, ""),
+                    speed = result.getInt(BaseCarDialogFragment.KEY_SPEED),
+                    hp = result.getInt(BaseCarDialogFragment.KEY_HP),
+                    image = result.getString(BaseCarDialogFragment.KEY_IMAGE, ""),
                 )
-                delay(100)
-                checkVisible()
+                checkBoxObserver()
             }
         }
     }
 
-    private fun setupNewCarDialogListener() {
-        requireActivity().supportFragmentManager.setFragmentResultListener(
+    private fun newCarDialogListener() {
+        parentFragmentManager.setFragmentResultListener(
             NewCarDialogFragment.REQUEST_KEY, this
         ) { _, result ->
             lifecycleScope.launch {
                 viewModel.addNewCar(
-                    model = result.getString(NewCarDialogFragment.KEY_MODEL)!!,
-                    color = result.getString(NewCarDialogFragment.KEY_COLOR)!!,
-                    speed = result.getInt(NewCarDialogFragment.KEY_SPEED),
-                    hp = result.getInt(NewCarDialogFragment.KEY_HP)
+                    model = result.getString(BaseCarDialogFragment.KEY_MODEL, ""),
+                    color = result.getString(BaseCarDialogFragment.KEY_COLOR, ""),
+                    speed = result.getInt(BaseCarDialogFragment.KEY_SPEED),
+                    hp = result.getInt(BaseCarDialogFragment.KEY_HP),
+                    image = result.getString(BaseCarDialogFragment.KEY_IMAGE, ""),
                 )
-                delay(100)
-                checkVisible()
+                checkBoxObserver()
             }
         }
     }

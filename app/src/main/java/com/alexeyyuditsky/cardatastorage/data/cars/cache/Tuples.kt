@@ -9,6 +9,7 @@ data class UpdateCarTuple(
     @ColumnInfo(name = "color") val color: String,
     @ColumnInfo(name = "speed") val speed: Int,
     @ColumnInfo(name = "hp") val hp: Int,
+    @ColumnInfo(name = "image") val image: String,
 )
 
 data class NewCarTuple(
@@ -17,4 +18,5 @@ data class NewCarTuple(
     @ColumnInfo(name = "color") val color: String,
     @ColumnInfo(name = "speed") val speed: Int,
     @ColumnInfo(name = "hp") val hp: Int,
+    @ColumnInfo(name = "image") val image: String,
 )

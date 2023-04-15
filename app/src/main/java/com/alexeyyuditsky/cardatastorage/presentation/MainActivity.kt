@@ -1,13 +1,10 @@
 package com.alexeyyuditsky.cardatastorage.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.alexeyyuditsky.cardatastorage.R
-import com.alexeyyuditsky.cardatastorage.presentation.cars.CarUi
-import com.alexeyyuditsky.cardatastorage.presentation.cars.EditCarDialogFragment
-import com.alexeyyuditsky.cardatastorage.presentation.cars.CarsFragment
-import com.alexeyyuditsky.cardatastorage.presentation.cars.NewCarDialogFragment
+import com.alexeyyuditsky.cardatastorage.presentation.cars.*
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), FragmentRouter {
 
@@ -30,6 +27,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), FragmentRouter {
     override fun showNewCarDialog() {
         NewCarDialogFragment
             .newInstance()
+            .show(supportFragmentManager, null)
+    }
+
+    override fun showFullscreenDialog(uri: String) {
+        FullscreenDialogFragment
+            .newInstance(uri)
             .show(supportFragmentManager, null)
     }
 
