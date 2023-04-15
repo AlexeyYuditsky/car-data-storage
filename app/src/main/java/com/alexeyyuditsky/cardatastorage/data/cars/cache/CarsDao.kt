@@ -1,7 +1,6 @@
 package com.alexeyyuditsky.cardatastorage.data.cars.cache
 
-import androidx.room.Dao
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface CarsDao {
@@ -17,5 +16,11 @@ interface CarsDao {
 
     @Query("SELECT * FROM cars WHERE speed > 189 ORDER BY model DESC")
     suspend fun getSortAndFilterByCars(): List<CarDb>
+
+    @Update(entity = CarDb::class)
+    suspend fun updateCar(carTuple: UpdateCarTuple)
+
+    @Insert(entity = CarDb::class, onConflict = OnConflictStrategy.REPLACE)
+    suspend fun newCar(carTuple: NewCarTuple)
 
 }

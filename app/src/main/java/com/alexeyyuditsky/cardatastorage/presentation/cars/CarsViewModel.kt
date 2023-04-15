@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alexeyyuditsky.cardatastorage.core.ResourceProvider
+import com.alexeyyuditsky.cardatastorage.data.cars.cache.NewCarTuple
+import com.alexeyyuditsky.cardatastorage.data.cars.cache.UpdateCarTuple
 import com.alexeyyuditsky.cardatastorage.domain.cars.CarsInteractor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -63,6 +65,14 @@ class CarsViewModel(
                 _carsLiveData.value = carsUi.cars
             }
         }
+    }
+
+    fun updateCar(id: Long, model: String, color: String, speed: Int, hp: Int) = viewModelScope.launch(Dispatchers.IO) {
+        interactor.updateCar(UpdateCarTuple(id, model, color, speed, hp))
+    }
+
+    fun addNewCar(model: String, color: String, speed: Int, hp: Int) = viewModelScope.launch(Dispatchers.IO) {
+        interactor.newCar(NewCarTuple(0, model, color, speed, hp))
     }
 
 }

@@ -6,6 +6,8 @@ interface CarsCacheDataSource {
     suspend fun fetchSortByBrandCars(): List<CarDb>
     suspend fun fetchFilterBySpeedCars(): List<CarDb>
     suspend fun fetchSortAndFilterByCars(): List<CarDb>
+    suspend fun updateCar(carTuple: UpdateCarTuple)
+    suspend fun newCar(carTuple: NewCarTuple)
 
     class Base(
         private val room: AppDatabase,
@@ -27,6 +29,13 @@ interface CarsCacheDataSource {
             return room.getCarsDao().getSortAndFilterByCars()
         }
 
+        override suspend fun updateCar(carTuple: UpdateCarTuple) {
+            room.getCarsDao().updateCar(carTuple)
+        }
+
+        override suspend fun newCar(carTuple: NewCarTuple) {
+            room.getCarsDao().newCar(carTuple)
+        }
     }
 
 }

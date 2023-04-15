@@ -13,7 +13,7 @@ sealed class CarUi {
         private val image: String?,
     ) : CarUi() {
         override fun map(mapper: TextMapper) {
-            mapper.map(model, color, speed, hp, image)
+            mapper.map(id, model, color, speed, hp, image)
         }
     }
 

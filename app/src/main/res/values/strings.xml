@@ -11,4 +11,10 @@
     <string name="try_again">Try again</string>
     <string name="sort_by_brand">Sort by brand</string>
     <string name="filter_by_speed">Filter by speed > 189</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="enter_model">Enter model</string>
+    <string name="enter_color">Enter color</string>
+    <string name="enter_speed">Enter speed</string>
+    <string name="enter_hp">Enter hp</string>
+    <string name="action_cancel">Cancel</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.alexeyyuditsky.cardatastorage.data.cars
 
+import com.alexeyyuditsky.cardatastorage.data.cars.cache.UpdateCarTuple
 import com.alexeyyuditsky.cardatastorage.data.cars.cache.CarsCacheDataSource
+import com.alexeyyuditsky.cardatastorage.data.cars.cache.NewCarTuple
 
 interface CarsRepository {
 
@@ -8,6 +10,8 @@ interface CarsRepository {
     suspend fun fetchSortByBrandCars(): CarsData
     suspend fun fetchFilterBySpeedCars(): CarsData
     suspend fun fetchSortAndFilterByCars(): CarsData
+    suspend fun updateCar(carTuple: UpdateCarTuple)
+    suspend fun newCar(carTuple: NewCarTuple)
 
     class Base(
         private val cacheDataSource: CarsCacheDataSource,
@@ -65,6 +69,13 @@ interface CarsRepository {
             }
         }
 
+        override suspend fun updateCar(carTuple: UpdateCarTuple) {
+            cacheDataSource.updateCar(carTuple)
+        }
+
+        override suspend fun newCar(carTuple: NewCarTuple) {
+            cacheDataSource.newCar(carTuple)
+        }
     }
 
 }
