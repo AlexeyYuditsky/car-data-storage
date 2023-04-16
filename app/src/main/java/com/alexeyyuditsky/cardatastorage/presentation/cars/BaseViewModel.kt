@@ -28,6 +28,8 @@ abstract class BaseViewModel(
         }
     }
 
-    fun saveCars(saveCarsLamb: suspend () -> Unit) = viewModelScope.launch(Dispatchers.IO) { saveCarsLamb() }
+    fun saveCars(saveCarsLamb: suspend () -> Unit) = viewModelScope.launch(Dispatchers.IO) {
+        saveCarsLamb()
+    }
 
 }
