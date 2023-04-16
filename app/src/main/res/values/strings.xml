@@ -20,4 +20,5 @@
     <string name="new_car">New car</string>
     <string name="empty_field">Empty field</string>
     <string name="fill_gaps">Fill in all the fields</string>
+    <string name="no_database">Database is unavailable</string>
 </resources>

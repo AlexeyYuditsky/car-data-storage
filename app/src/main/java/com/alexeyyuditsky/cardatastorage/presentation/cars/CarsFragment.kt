@@ -15,11 +15,19 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.alexeyyuditsky.App
 import com.alexeyyuditsky.cardatastorage.R
+import com.alexeyyuditsky.cardatastorage.core.Const.KEY_COLOR
+import com.alexeyyuditsky.cardatastorage.core.Const.KEY_HP
+import com.alexeyyuditsky.cardatastorage.core.Const.KEY_ID
+import com.alexeyyuditsky.cardatastorage.core.Const.KEY_IMAGE
+import com.alexeyyuditsky.cardatastorage.core.Const.KEY_MODEL
+import com.alexeyyuditsky.cardatastorage.core.Const.KEY_SPEED
 import com.alexeyyuditsky.cardatastorage.databinding.FragmentCarsBinding
-import com.alexeyyuditsky.cardatastorage.presentation.FragmentRouter
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
+var isSort = false
+var isFilter = false
 
 class CarsFragment : Fragment(R.layout.fragment_cars) {
 
@@ -70,6 +78,7 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
     }
 
     private fun checkBoxObserver() {
+
         lifecycleScope.launch {
             delay(100)
             if (isSort && isFilter) {
@@ -81,6 +90,7 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
             } else if (!isSort && !isFilter) {
                 viewModel.fetchAllCars()
             }
+            binding.recyclerView.scrollToPosition(0)
         }
     }
 
@@ -118,7 +128,7 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val car = viewHolder.itemView.tag as? CarUi ?: return
                 fragmentRouter.showEditCarDialog(car)
-                carsAdapter.update(viewModel.carsLiveData.value!!)
+                carsAdapter.notifyDataSetChanged()
             }
 
             override fun onChildDraw(
@@ -145,17 +155,15 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
         parentFragmentManager.setFragmentResultListener(
             EditCarDialogFragment.REQUEST_KEY, this
         ) { _, result ->
-            lifecycleScope.launch {
-                viewModel.updateCar(
-                    id = result.getLong(BaseCarDialogFragment.KEY_ID),
-                    model = result.getString(BaseCarDialogFragment.KEY_MODEL, ""),
-                    color = result.getString(BaseCarDialogFragment.KEY_COLOR, ""),
-                    speed = result.getInt(BaseCarDialogFragment.KEY_SPEED),
-                    hp = result.getInt(BaseCarDialogFragment.KEY_HP),
-                    image = result.getString(BaseCarDialogFragment.KEY_IMAGE, ""),
-                )
-                checkBoxObserver()
-            }
+            viewModel.updateCar(
+                id = result.getLong(KEY_ID),
+                model = result.getString(KEY_MODEL, ""),
+                color = result.getString(KEY_COLOR, ""),
+                speed = result.getInt(KEY_SPEED),
+                hp = result.getInt(KEY_HP),
+                image = result.getString(KEY_IMAGE, ""),
+            )
+            checkBoxObserver()
         }
     }
 
@@ -163,22 +171,15 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
         parentFragmentManager.setFragmentResultListener(
             NewCarDialogFragment.REQUEST_KEY, this
         ) { _, result ->
-            lifecycleScope.launch {
-                viewModel.addNewCar(
-                    model = result.getString(BaseCarDialogFragment.KEY_MODEL, ""),
-                    color = result.getString(BaseCarDialogFragment.KEY_COLOR, ""),
-                    speed = result.getInt(BaseCarDialogFragment.KEY_SPEED),
-                    hp = result.getInt(BaseCarDialogFragment.KEY_HP),
-                    image = result.getString(BaseCarDialogFragment.KEY_IMAGE, ""),
-                )
-                checkBoxObserver()
-            }
+            viewModel.addNewCar(
+                model = result.getString(KEY_MODEL, ""),
+                color = result.getString(KEY_COLOR, ""),
+                speed = result.getInt(KEY_SPEED),
+                hp = result.getInt(KEY_HP),
+                image = result.getString(KEY_IMAGE, ""),
+            )
+            checkBoxObserver()
         }
-    }
-
-    private companion object {
-        var isSort = false
-        var isFilter = false
     }
 
 }

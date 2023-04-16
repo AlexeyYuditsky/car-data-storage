@@ -16,6 +16,7 @@ interface CarsInteractor {
     class Base(
         private val repository: CarsRepository,
     ) : CarsInteractor {
+
         override suspend fun fetchAllCars(): CarsDomain {
             val carsData = repository.fetchAllCars()
             return carsData.map()
@@ -43,6 +44,7 @@ interface CarsInteractor {
         override suspend fun newCar(carTuple: NewCarTuple) {
             repository.newCar(carTuple)
         }
+
     }
 
 }

@@ -10,31 +10,31 @@ interface CarsCacheDataSource {
     suspend fun newCar(carTuple: NewCarTuple)
 
     class Base(
-        private val room: AppDatabase,
+        private val carsDao: CarsDao,
     ) : CarsCacheDataSource {
 
         override suspend fun fetchAllCars(): List<CarDb> {
-            return room.getCarsDao().getAllCars()
+            return carsDao.getAllCars()
         }
 
         override suspend fun fetchSortByBrandCars(): List<CarDb> {
-            return room.getCarsDao().getSortByBrandCars()
+            return carsDao.getSortByBrandCars()
         }
 
         override suspend fun fetchFilterBySpeedCars(): List<CarDb> {
-            return room.getCarsDao().getFilterBySpeedCars()
+            return carsDao.getFilterBySpeedCars()
         }
 
         override suspend fun fetchSortAndFilterByCars(): List<CarDb> {
-            return room.getCarsDao().getSortAndFilterByCars()
+            return carsDao.getSortAndFilterByCars()
         }
 
         override suspend fun updateCar(carTuple: UpdateCarTuple) {
-            room.getCarsDao().updateCar(carTuple)
+            carsDao.updateCar(carTuple)
         }
 
         override suspend fun newCar(carTuple: NewCarTuple) {
-            room.getCarsDao().newCar(carTuple)
+            carsDao.newCar(carTuple)
         }
 
     }

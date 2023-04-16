@@ -24,7 +24,7 @@ class CarsModule(
     }
 
     private fun getCarsCacheDataSource(): CarsCacheDataSource {
-        return CarsCacheDataSource.Base(coreModule.database)
+        return CarsCacheDataSource.Base(coreModule.database.getCarsDao())
     }
 
 }

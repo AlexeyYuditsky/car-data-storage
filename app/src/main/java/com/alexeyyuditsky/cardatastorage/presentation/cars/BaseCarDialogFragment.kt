@@ -25,7 +25,7 @@ abstract class BaseCarDialogFragment : DialogFragment() {
         }
     }
 
-    protected abstract fun createPositiveListener(): DialogInterface.OnClickListener
+    protected abstract val positiveListener: DialogInterface.OnClickListener
 
     protected abstract fun getTitle(): String
 
@@ -33,7 +33,7 @@ abstract class BaseCarDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = DialogCarBinding.inflate(LayoutInflater.from(context))
-        setupImageViewListener()
+        imageViewListener()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -41,7 +41,7 @@ abstract class BaseCarDialogFragment : DialogFragment() {
             .setTitle(getTitle())
             .setView(binding.root)
             .setNegativeButton(android.R.string.cancel, null)
-            .setPositiveButton(android.R.string.ok, createPositiveListener())
+            .setPositiveButton(android.R.string.ok, positiveListener)
             .create()
     }
 
@@ -50,21 +50,12 @@ abstract class BaseCarDialogFragment : DialogFragment() {
         _binding = null
     }
 
-    private fun setupImageViewListener() {
+    private fun imageViewListener() {
         binding.imageView.setOnClickListener {
             ImagePicker.with(this)
                 .galleryOnly()
                 .createIntent { intent -> imageResult.launch(intent) }
         }
-    }
-
-    companion object {
-        const val KEY_ID = "id"
-        const val KEY_MODEL = "model"
-        const val KEY_COLOR = "color"
-        const val KEY_SPEED = "speed"
-        const val KEY_HP = "hp"
-        const val KEY_IMAGE = "image"
     }
 
 }

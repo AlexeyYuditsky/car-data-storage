@@ -1,8 +1,8 @@
 package com.alexeyyuditsky.cardatastorage.presentation.cars
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.alexeyyuditsky.cardatastorage.R
 import com.alexeyyuditsky.cardatastorage.databinding.ItemCarBinding
@@ -18,11 +18,12 @@ class CarsAdapter(
 
     private val cars = mutableListOf<CarUi>()
 
-    @SuppressLint("NotifyDataSetChanged")
     fun update(newCars: List<CarUi>) {
+        val diffCallback = DiffUtilCallback(cars, newCars)
+        val result = DiffUtil.calculateDiff(diffCallback, false)
         cars.clear()
         cars.addAll(newCars)
-        notifyDataSetChanged()
+        result.dispatchUpdatesTo(this)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -61,5 +62,6 @@ class CarsAdapter(
     }
 
     override fun getItemCount(): Int = cars.size
+
 }
 

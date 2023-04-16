@@ -1,6 +1,4 @@
-package com.alexeyyuditsky.cardatastorage.presentation
-
-import com.alexeyyuditsky.cardatastorage.presentation.cars.CarUi
+package com.alexeyyuditsky.cardatastorage.presentation.cars
 
 interface FragmentRouter {
 

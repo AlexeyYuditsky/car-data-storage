@@ -38,6 +38,7 @@ sealed class CarsDomain : Abstract.DomainToUi<CarsUi> {
         override fun map(resourceProvider: ResourceProvider): CarsUi {
             return CarsUi(listOf(CarUi.Empty))
         }
+
     }
 
 }

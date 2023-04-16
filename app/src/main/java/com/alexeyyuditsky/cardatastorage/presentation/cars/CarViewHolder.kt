@@ -19,7 +19,7 @@ abstract class CarViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         override fun bind(item: CarUi) {
             item.map(object : TextMapper {
-                override fun map(vararg a: Any?) {
+                override fun map(vararg a: Any) {
                     binding.modelTextView.text = a[1].toString()
                     binding.colorTextView.text = a[2].toString()
                     binding.speedTextView.text = a[3].toString()
@@ -47,7 +47,7 @@ abstract class CarViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         override fun bind(item: CarUi) {
             item.map(object : TextMapper {
-                override fun map(vararg a: Any?) {
+                override fun map(vararg a: Any) {
                     binding.message.text = a[0].toString()
                     binding.tryAgain.setOnClickListener { retry.invoke() }
                 }
@@ -64,9 +64,4 @@ abstract class CarViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         view: View,
     ) : CarViewHolder(view)
 
-}
-
-fun main() {
-    val a: String? = null
-    println(a.toString())
 }

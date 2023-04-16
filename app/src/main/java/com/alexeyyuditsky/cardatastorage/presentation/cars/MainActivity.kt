@@ -1,10 +1,9 @@
-package com.alexeyyuditsky.cardatastorage.presentation
+package com.alexeyyuditsky.cardatastorage.presentation.cars
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.alexeyyuditsky.cardatastorage.R
-import com.alexeyyuditsky.cardatastorage.presentation.cars.*
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), FragmentRouter {
 

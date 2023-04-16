@@ -1,10 +1,10 @@
 package com.alexeyyuditsky.cardatastorage.data.cars
 
-import com.alexeyyuditsky.cardatastorage.data.cars.cache.UpdateCarTuple
 import com.alexeyyuditsky.cardatastorage.data.cars.cache.CarsCacheDataSource
 import com.alexeyyuditsky.cardatastorage.data.cars.cache.NewCarTuple
+import com.alexeyyuditsky.cardatastorage.data.cars.cache.UpdateCarTuple
 
-interface CarsRepository {
+interface CarsRepository : BaseCarsRepository {
 
     suspend fun fetchAllCars(): CarsData
     suspend fun fetchSortByBrandCars(): CarsData
@@ -18,55 +18,19 @@ interface CarsRepository {
     ) : CarsRepository {
 
         override suspend fun fetchAllCars(): CarsData {
-            return try {
-                val carDbList = cacheDataSource.fetchAllCars()
-                if (carDbList.isEmpty()) {
-                    CarsData.Empty
-                } else {
-                    CarsData.Success(carDbList)
-                }
-            } catch (e: Exception) {
-                CarsData.Fail(e)
-            }
+            return fetchCars { cacheDataSource.fetchAllCars() }
         }
 
         override suspend fun fetchSortByBrandCars(): CarsData {
-            return try {
-                val carDbList = cacheDataSource.fetchSortByBrandCars()
-                if (carDbList.isEmpty()) {
-                    CarsData.Empty
-                } else {
-                    CarsData.Success(carDbList)
-                }
-            } catch (e: Exception) {
-                CarsData.Fail(e)
-            }
+            return fetchCars { cacheDataSource.fetchSortByBrandCars() }
         }
 
         override suspend fun fetchFilterBySpeedCars(): CarsData {
-            return try {
-                val carDbList = cacheDataSource.fetchFilterBySpeedCars()
-                if (carDbList.isEmpty()) {
-                    CarsData.Empty
-                } else {
-                    CarsData.Success(carDbList)
-                }
-            } catch (e: Exception) {
-                CarsData.Fail(e)
-            }
+            return fetchCars { cacheDataSource.fetchFilterBySpeedCars() }
         }
 
         override suspend fun fetchSortAndFilterByCars(): CarsData {
-            return try {
-                val carDbList = cacheDataSource.fetchSortAndFilterByCars()
-                if (carDbList.isEmpty()) {
-                    CarsData.Empty
-                } else {
-                    CarsData.Success(carDbList)
-                }
-            } catch (e: Exception) {
-                CarsData.Fail(e)
-            }
+            return fetchCars { cacheDataSource.fetchSortAndFilterByCars() }
         }
 
         override suspend fun updateCar(carTuple: UpdateCarTuple) {
@@ -76,6 +40,7 @@ interface CarsRepository {
         override suspend fun newCar(carTuple: NewCarTuple) {
             cacheDataSource.newCar(carTuple)
         }
+
     }
 
 }

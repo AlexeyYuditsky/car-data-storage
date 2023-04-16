@@ -6,44 +6,44 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import com.alexeyyuditsky.cardatastorage.R
+import com.alexeyyuditsky.cardatastorage.core.Const.KEY_COLOR
+import com.alexeyyuditsky.cardatastorage.core.Const.KEY_HP
+import com.alexeyyuditsky.cardatastorage.core.Const.KEY_ID
+import com.alexeyyuditsky.cardatastorage.core.Const.KEY_IMAGE
+import com.alexeyyuditsky.cardatastorage.core.Const.KEY_MODEL
+import com.alexeyyuditsky.cardatastorage.core.Const.KEY_SPEED
 
 class EditCarDialogFragment : BaseCarDialogFragment() {
 
-    override fun getTitle(): String {
-        return requireArguments().getString(KEY_MODEL, "")
-    }
+    override val positiveListener = DialogInterface.OnClickListener { _, _ ->
+        val modelTemp = binding.modelInputEditText.text.toString()
+        val colorTemp = binding.colorInputEditText.text.toString()
+        val speedTemp = binding.speedInputEditText.text.toString()
+        val hpTemp = binding.hpInputEditText.text.toString()
+        val imageUriTemp =
+            if (binding.imageView.tag == null) arguments?.getString(KEY_IMAGE) else binding.imageView.tag.toString()
 
-    override fun createPositiveListener(): DialogInterface.OnClickListener {
-        return object : DialogInterface.OnClickListener {
-            override fun onClick(dialog: DialogInterface?, which: Int) {
-                val modelTemp = binding.modelInputEditText.text.toString()
-                val colorTemp = binding.colorInputEditText.text.toString()
-                val speedTemp = binding.speedInputEditText.text.toString()
-                val hpTemp = binding.hpInputEditText.text.toString()
-                val imageUriTemp = if (binding.imageView.tag == null)
-                    arguments?.getString(KEY_IMAGE)
-                else
-                    binding.imageView.tag.toString()
-
-                listOf(modelTemp, colorTemp, speedTemp, hpTemp).forEach {
-                    if (it.isBlank()) {
-                        Toast.makeText(requireContext(), R.string.fill_gaps, Toast.LENGTH_SHORT).show()
-                        return
-                    }
-                }
-
-                parentFragmentManager.setFragmentResult(
-                    REQUEST_KEY, bundleOf(
-                        KEY_ID to arguments?.getLong(KEY_ID),
-                        KEY_MODEL to modelTemp,
-                        KEY_COLOR to colorTemp,
-                        KEY_SPEED to speedTemp.toInt(),
-                        KEY_HP to hpTemp.toInt(),
-                        KEY_IMAGE to imageUriTemp
-                    )
-                )
+        listOf(modelTemp, colorTemp, speedTemp, hpTemp).forEach {
+            if (it.isBlank()) {
+                Toast.makeText(requireContext(), R.string.fill_gaps, Toast.LENGTH_SHORT).show()
+                return@OnClickListener
             }
         }
+
+        parentFragmentManager.setFragmentResult(
+            REQUEST_KEY, bundleOf(
+                KEY_ID to arguments?.getLong(KEY_ID),
+                KEY_MODEL to modelTemp,
+                KEY_COLOR to colorTemp,
+                KEY_SPEED to speedTemp.toInt(),
+                KEY_HP to hpTemp.toInt(),
+                KEY_IMAGE to imageUriTemp
+            )
+        )
+    }
+
+    override fun getTitle(): String {
+        return requireArguments().getString(KEY_MODEL, "")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +67,7 @@ class EditCarDialogFragment : BaseCarDialogFragment() {
         fun newInstance(car: CarUi): EditCarDialogFragment {
             return EditCarDialogFragment().apply {
                 car.map(object : TextMapper {
-                    override fun map(vararg a: Any?) {
+                    override fun map(vararg a: Any) {
                         arguments = bundleOf(
                             KEY_ID to a[0].toString().toLong(),
                             KEY_MODEL to a[1].toString(),

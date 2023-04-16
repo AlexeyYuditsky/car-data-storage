@@ -1,8 +1,7 @@
 package com.alexeyyuditsky.cardatastorage.core
 
+import android.database.sqlite.SQLiteException
 import com.alexeyyuditsky.cardatastorage.R
-import java.net.UnknownHostException
-import com.bumptech.glide.load.HttpException
 
 interface Abstract {
 
@@ -12,8 +11,7 @@ interface Abstract {
 
         fun errorType(e: Exception): ErrorType {
             return when (e) {
-                is UnknownHostException -> ErrorType.NO_CONNECTION
-                is HttpException -> ErrorType.SERVICE_UNAVAILABLE
+                is SQLiteException -> ErrorType.NO_DATABASE
                 else -> ErrorType.GENERIC_ERROR
             }
         }
@@ -26,8 +24,7 @@ interface Abstract {
 
         fun errorMessage(errorType: ErrorType, resourceProvider: ResourceProvider): String {
             val message = when (errorType) {
-                ErrorType.NO_CONNECTION -> R.string.no_connection_message
-                ErrorType.SERVICE_UNAVAILABLE -> R.string.service_unavailable_message
+                ErrorType.NO_DATABASE -> R.string.no_database
                 else -> R.string.something_went_wrong
             }
             return resourceProvider.getString(message)

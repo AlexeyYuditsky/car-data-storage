@@ -20,7 +20,7 @@ interface CarsDao {
     @Update(entity = CarDb::class)
     suspend fun updateCar(carTuple: UpdateCarTuple)
 
-    @Insert(entity = CarDb::class, onConflict = OnConflictStrategy.REPLACE)
+    @Insert(entity = CarDb::class, onConflict = OnConflictStrategy.IGNORE)
     suspend fun newCar(carTuple: NewCarTuple)
 
 }
