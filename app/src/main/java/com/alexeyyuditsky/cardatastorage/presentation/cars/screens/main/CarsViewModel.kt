@@ -5,8 +5,11 @@ import com.alexeyyuditsky.cardatastorage.data.cars.cache.NewCarTuple
 import com.alexeyyuditsky.cardatastorage.data.cars.cache.UpdateCarTuple
 import com.alexeyyuditsky.cardatastorage.domain.cars.CarsInteractor
 import com.alexeyyuditsky.cardatastorage.presentation.cars.screens.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class CarsViewModel(
+@HiltViewModel
+class CarsViewModel @Inject constructor(
     private val interactor: CarsInteractor,
     resourceProvider: ResourceProvider,
 ) : BaseViewModel(resourceProvider) {

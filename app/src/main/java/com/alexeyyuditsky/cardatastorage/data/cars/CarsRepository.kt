@@ -3,6 +3,7 @@ package com.alexeyyuditsky.cardatastorage.data.cars
 import com.alexeyyuditsky.cardatastorage.data.cars.cache.CarsCacheDataSource
 import com.alexeyyuditsky.cardatastorage.data.cars.cache.NewCarTuple
 import com.alexeyyuditsky.cardatastorage.data.cars.cache.UpdateCarTuple
+import javax.inject.Inject
 
 interface CarsRepository : BaseCarsRepository {
 
@@ -13,7 +14,7 @@ interface CarsRepository : BaseCarsRepository {
     suspend fun updateCar(carTuple: UpdateCarTuple)
     suspend fun newCar(carTuple: NewCarTuple)
 
-    class Base(
+    class Base @Inject constructor(
         private val cacheDataSource: CarsCacheDataSource,
     ) : CarsRepository {
 

@@ -1,5 +1,7 @@
 package com.alexeyyuditsky.cardatastorage.data.cars.cache
 
+import javax.inject.Inject
+
 interface CarsCacheDataSource {
 
     suspend fun fetchAllCars(): List<CarDb>
@@ -9,7 +11,7 @@ interface CarsCacheDataSource {
     suspend fun updateCar(carTuple: UpdateCarTuple)
     suspend fun newCar(carTuple: NewCarTuple)
 
-    class Base(
+    class Base @Inject constructor(
         private val carsDao: CarsDao,
     ) : CarsCacheDataSource {
 

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
     version = 1,
     entities = [CarDb::class]
 )
-abstract class AppDatabase : RoomDatabase() {
+abstract class CarsDatabase : RoomDatabase() {
 
     abstract fun getCarsDao(): CarsDao
 

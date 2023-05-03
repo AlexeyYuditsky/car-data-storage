@@ -3,6 +3,7 @@ package com.alexeyyuditsky.cardatastorage.domain.cars
 import com.alexeyyuditsky.cardatastorage.data.cars.CarsRepository
 import com.alexeyyuditsky.cardatastorage.data.cars.cache.NewCarTuple
 import com.alexeyyuditsky.cardatastorage.data.cars.cache.UpdateCarTuple
+import javax.inject.Inject
 
 interface CarsInteractor {
 
@@ -13,7 +14,7 @@ interface CarsInteractor {
     suspend fun updateCar(carTuple: UpdateCarTuple)
     suspend fun newCar(carTuple: NewCarTuple)
 
-    class Base(
+    class Base @Inject constructor(
         private val repository: CarsRepository,
     ) : CarsInteractor {
 
