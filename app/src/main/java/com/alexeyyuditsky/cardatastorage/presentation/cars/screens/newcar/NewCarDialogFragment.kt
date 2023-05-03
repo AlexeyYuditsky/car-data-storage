@@ -1,4 +1,4 @@
-package com.alexeyyuditsky.cardatastorage.presentation.cars
+package com.alexeyyuditsky.cardatastorage.presentation.cars.screens.newcar
 
 import android.content.DialogInterface
 import android.widget.Toast
@@ -9,6 +9,7 @@ import com.alexeyyuditsky.cardatastorage.core.Const.KEY_HP
 import com.alexeyyuditsky.cardatastorage.core.Const.KEY_IMAGE
 import com.alexeyyuditsky.cardatastorage.core.Const.KEY_MODEL
 import com.alexeyyuditsky.cardatastorage.core.Const.KEY_SPEED
+import com.alexeyyuditsky.cardatastorage.presentation.cars.screens.base.BaseCarDialogFragment
 
 class NewCarDialogFragment : BaseCarDialogFragment() {
 

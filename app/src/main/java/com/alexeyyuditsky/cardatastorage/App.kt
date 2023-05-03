@@ -1,4 +1,4 @@
-package com.alexeyyuditsky
+package com.alexeyyuditsky.cardatastorage
 
 import android.app.Application
 import com.alexeyyuditsky.cardatastorage.sl.cars.CarsFactory

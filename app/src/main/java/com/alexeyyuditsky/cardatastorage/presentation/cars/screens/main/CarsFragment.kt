@@ -1,4 +1,4 @@
-package com.alexeyyuditsky.cardatastorage.presentation.cars
+package com.alexeyyuditsky.cardatastorage.presentation.cars.screens.main
 
 import android.annotation.SuppressLint
 import android.graphics.Canvas
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.alexeyyuditsky.App
+import com.alexeyyuditsky.cardatastorage.App
 import com.alexeyyuditsky.cardatastorage.R
 import com.alexeyyuditsky.cardatastorage.core.Const.KEY_COLOR
 import com.alexeyyuditsky.cardatastorage.core.Const.KEY_HP
@@ -22,6 +22,11 @@ import com.alexeyyuditsky.cardatastorage.core.Const.KEY_IMAGE
 import com.alexeyyuditsky.cardatastorage.core.Const.KEY_MODEL
 import com.alexeyyuditsky.cardatastorage.core.Const.KEY_SPEED
 import com.alexeyyuditsky.cardatastorage.databinding.FragmentCarsBinding
+import com.alexeyyuditsky.cardatastorage.presentation.cars.CarUi
+import com.alexeyyuditsky.cardatastorage.presentation.cars.adapters.CarsAdapter
+import com.alexeyyuditsky.cardatastorage.presentation.cars.screens.editcar.EditCarDialogFragment
+import com.alexeyyuditsky.cardatastorage.presentation.cars.FragmentRouter
+import com.alexeyyuditsky.cardatastorage.presentation.cars.screens.newcar.NewCarDialogFragment
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

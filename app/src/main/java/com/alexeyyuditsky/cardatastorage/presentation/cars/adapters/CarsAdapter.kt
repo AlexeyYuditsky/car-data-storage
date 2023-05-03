@@ -1,4 +1,4 @@
-package com.alexeyyuditsky.cardatastorage.presentation.cars
+package com.alexeyyuditsky.cardatastorage.presentation.cars.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alexeyyuditsky.cardatastorage.R
 import com.alexeyyuditsky.cardatastorage.databinding.ItemCarBinding
 import com.alexeyyuditsky.cardatastorage.databinding.ItemFailBinding
+import com.alexeyyuditsky.cardatastorage.presentation.cars.CarUi
 
 typealias RetryClickListener = () -> Unit
 typealias ImageClickListener = (uri: String) -> Unit
@@ -64,4 +65,3 @@ class CarsAdapter(
     override fun getItemCount(): Int = cars.size
 
 }
-

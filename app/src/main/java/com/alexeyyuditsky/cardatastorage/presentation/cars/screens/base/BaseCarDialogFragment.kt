@@ -1,4 +1,4 @@
-package com.alexeyyuditsky.cardatastorage.presentation.cars
+package com.alexeyyuditsky.cardatastorage.presentation.cars.screens.base
 
 import android.annotation.SuppressLint
 import android.app.Activity

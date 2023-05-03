@@ -1,4 +1,4 @@
-package com.alexeyyuditsky.cardatastorage.presentation.cars
+package com.alexeyyuditsky.cardatastorage.presentation.cars.adapters
 
 import android.net.Uri
 import android.view.View
@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alexeyyuditsky.cardatastorage.R
 import com.alexeyyuditsky.cardatastorage.databinding.ItemCarBinding
 import com.alexeyyuditsky.cardatastorage.databinding.ItemFailBinding
+import com.alexeyyuditsky.cardatastorage.presentation.cars.CarUi
+import com.alexeyyuditsky.cardatastorage.presentation.cars.TextMapper
 import com.bumptech.glide.Glide
 
 abstract class CarViewHolder(view: View) : RecyclerView.ViewHolder(view) {

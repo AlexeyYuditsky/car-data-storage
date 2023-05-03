@@ -1,9 +1,10 @@
-package com.alexeyyuditsky.cardatastorage.presentation.cars
+package com.alexeyyuditsky.cardatastorage.presentation.cars.screens.main
 
 import com.alexeyyuditsky.cardatastorage.core.ResourceProvider
 import com.alexeyyuditsky.cardatastorage.data.cars.cache.NewCarTuple
 import com.alexeyyuditsky.cardatastorage.data.cars.cache.UpdateCarTuple
 import com.alexeyyuditsky.cardatastorage.domain.cars.CarsInteractor
+import com.alexeyyuditsky.cardatastorage.presentation.cars.screens.base.BaseViewModel
 
 class CarsViewModel(
     private val interactor: CarsInteractor,

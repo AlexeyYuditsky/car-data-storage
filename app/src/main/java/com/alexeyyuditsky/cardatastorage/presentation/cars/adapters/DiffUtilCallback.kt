@@ -1,6 +1,7 @@
-package com.alexeyyuditsky.cardatastorage.presentation.cars
+package com.alexeyyuditsky.cardatastorage.presentation.cars.adapters
 
 import androidx.recyclerview.widget.DiffUtil
+import com.alexeyyuditsky.cardatastorage.presentation.cars.CarUi
 
 class DiffUtilCallback(
     private val oldList: List<CarUi>,

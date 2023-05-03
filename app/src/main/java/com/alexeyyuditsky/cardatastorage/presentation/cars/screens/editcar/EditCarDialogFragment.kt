@@ -1,4 +1,4 @@
-package com.alexeyyuditsky.cardatastorage.presentation.cars
+package com.alexeyyuditsky.cardatastorage.presentation.cars.screens.editcar
 
 import android.content.DialogInterface
 import android.net.Uri
@@ -12,6 +12,9 @@ import com.alexeyyuditsky.cardatastorage.core.Const.KEY_ID
 import com.alexeyyuditsky.cardatastorage.core.Const.KEY_IMAGE
 import com.alexeyyuditsky.cardatastorage.core.Const.KEY_MODEL
 import com.alexeyyuditsky.cardatastorage.core.Const.KEY_SPEED
+import com.alexeyyuditsky.cardatastorage.presentation.cars.CarUi
+import com.alexeyyuditsky.cardatastorage.presentation.cars.TextMapper
+import com.alexeyyuditsky.cardatastorage.presentation.cars.screens.base.BaseCarDialogFragment
 
 class EditCarDialogFragment : BaseCarDialogFragment() {
 
