@@ -6,42 +6,38 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import com.alexeyyuditsky.cardatastorage.R
-import com.alexeyyuditsky.cardatastorage.core.Const.KEY_COLOR
-import com.alexeyyuditsky.cardatastorage.core.Const.KEY_HP
-import com.alexeyyuditsky.cardatastorage.core.Const.KEY_ID
-import com.alexeyyuditsky.cardatastorage.core.Const.KEY_IMAGE
+import com.alexeyyuditsky.cardatastorage.core.Const
 import com.alexeyyuditsky.cardatastorage.core.Const.KEY_MODEL
-import com.alexeyyuditsky.cardatastorage.core.Const.KEY_SPEED
-import com.alexeyyuditsky.cardatastorage.presentation.cars.CarUi
-import com.alexeyyuditsky.cardatastorage.presentation.cars.TextMapper
 import com.alexeyyuditsky.cardatastorage.presentation.cars.screens.base.BaseCarDialogFragment
+import kotlin.properties.Delegates
 
 class EditCarDialogFragment : BaseCarDialogFragment() {
+
+    private var carId by Delegates.notNull<String>()
+    private var carImageUri by Delegates.notNull<String>()
 
     override val positiveListener = DialogInterface.OnClickListener { _, _ ->
         val modelTemp = binding.modelInputEditText.text.toString()
         val colorTemp = binding.colorInputEditText.text.toString()
         val speedTemp = binding.speedInputEditText.text.toString()
         val hpTemp = binding.hpInputEditText.text.toString()
-        val imageUriTemp =
-            if (binding.imageView.tag == null) arguments?.getString(KEY_IMAGE) else binding.imageView.tag.toString()
+        val imageUriTemp = if (binding.imageView.tag == null)
+            carImageUri
+        else
+            binding.imageView.tag.toString()
 
-        listOf(modelTemp, colorTemp, speedTemp, hpTemp).forEach {
+        arrayOf(modelTemp, colorTemp, speedTemp, hpTemp).forEach {
             if (it.isBlank()) {
                 Toast.makeText(requireContext(), R.string.fill_gaps, Toast.LENGTH_SHORT).show()
                 return@OnClickListener
             }
         }
 
+        val carArgs = arrayOf(carId, modelTemp, colorTemp, speedTemp, hpTemp, imageUriTemp)
+
         parentFragmentManager.setFragmentResult(
-            REQUEST_KEY, bundleOf(
-                KEY_ID to arguments?.getLong(KEY_ID),
-                KEY_MODEL to modelTemp,
-                KEY_COLOR to colorTemp,
-                KEY_SPEED to speedTemp.toInt(),
-                KEY_HP to hpTemp.toInt(),
-                KEY_IMAGE to imageUriTemp
-            )
+            REQUEST_KEY,
+            bundleOf(Const.KEY_ARGS_CAR to carArgs)
         )
     }
 
@@ -51,38 +47,17 @@ class EditCarDialogFragment : BaseCarDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val model = requireArguments().getString(KEY_MODEL)
-        val color = requireArguments().getString(KEY_COLOR)
-        val speed = requireArguments().getInt(KEY_SPEED)
-        val hp = requireArguments().getInt(KEY_HP)
-        val image = requireArguments().getString(KEY_IMAGE)
-
-        binding.modelInputEditText.setText(model)
-        binding.colorInputEditText.setText(color)
-        binding.speedInputEditText.setText(speed.toString())
-        binding.hpInputEditText.setText(hp.toString())
-        binding.imageView.setImageURI(Uri.parse(image))
+        val carArgs = requireArguments().getStringArray(Const.KEY_ARGS_CAR)!!
+        carId = carArgs[0]
+        binding.modelInputEditText.setText(carArgs[1])
+        binding.colorInputEditText.setText(carArgs[2])
+        binding.speedInputEditText.setText(carArgs[3])
+        binding.hpInputEditText.setText(carArgs[4])
+        binding.imageView.setImageURI(Uri.parse(carArgs[5].apply { carImageUri = this }))
     }
 
     companion object {
         const val REQUEST_KEY = "editCarDialogRequestKey"
-
-        fun newInstance(car: CarUi): EditCarDialogFragment {
-            return EditCarDialogFragment().apply {
-                car.map(object : TextMapper {
-                    override fun map(vararg a: Any) {
-                        arguments = bundleOf(
-                            KEY_ID to a[0].toString().toLong(),
-                            KEY_MODEL to a[1].toString(),
-                            KEY_COLOR to a[2].toString(),
-                            KEY_SPEED to a[3].toString().toInt(),
-                            KEY_HP to a[4].toString().toInt(),
-                            KEY_IMAGE to a[5].toString()
-                        )
-                    }
-                })
-            }
-        }
     }
 
 }

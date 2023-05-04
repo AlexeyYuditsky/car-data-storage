@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/carsFragment">
+
+    <fragment
+        android:id="@+id/carsFragment"
+        android:name="com.alexeyyuditsky.cardatastorage.presentation.cars.screens.main.CarsFragment"
+        android:label="fragment_cars"
+        tools:layout="@layout/fragment_cars">
+        <action
+            android:id="@+id/action_carsFragment_to_fullscreenDialogFragment"
+            app:destination="@id/fullscreenDialogFragment" />
+        <action
+            android:id="@+id/action_carsFragment_to_newCarDialogFragment"
+            app:destination="@id/newCarDialogFragment" />
+        <action
+            android:id="@+id/action_carsFragment_to_editCarDialogFragment"
+            app:destination="@id/editCarDialogFragment" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/fullscreenDialogFragment"
+        android:name="com.alexeyyuditsky.cardatastorage.presentation.cars.screens.fullscreencar.FullscreenDialogFragment"
+        android:label="dialog_fullscreen"
+        tools:layout="@layout/dialog_fullscreen" />
+
+    <dialog
+        android:id="@+id/newCarDialogFragment"
+        android:name="com.alexeyyuditsky.cardatastorage.presentation.cars.screens.newcar.NewCarDialogFragment"
+        android:label="dialog_car"
+        tools:layout="@layout/dialog_car" />
+
+    <dialog
+        android:id="@+id/editCarDialogFragment"
+        android:name="com.alexeyyuditsky.cardatastorage.presentation.cars.screens.editcar.EditCarDialogFragment"
+        android:label="EditCarDialogFragment"
+        tools:layout="@layout/dialog_car" />
+
+</navigation>

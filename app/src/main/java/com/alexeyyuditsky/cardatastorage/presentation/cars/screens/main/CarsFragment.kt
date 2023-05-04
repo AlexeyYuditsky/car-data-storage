@@ -6,25 +6,23 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.alexeyyuditsky.cardatastorage.R
-import com.alexeyyuditsky.cardatastorage.core.Const.KEY_COLOR
-import com.alexeyyuditsky.cardatastorage.core.Const.KEY_HP
-import com.alexeyyuditsky.cardatastorage.core.Const.KEY_ID
-import com.alexeyyuditsky.cardatastorage.core.Const.KEY_IMAGE
-import com.alexeyyuditsky.cardatastorage.core.Const.KEY_MODEL
-import com.alexeyyuditsky.cardatastorage.core.Const.KEY_SPEED
+import com.alexeyyuditsky.cardatastorage.core.Const
 import com.alexeyyuditsky.cardatastorage.databinding.FragmentCarsBinding
 import com.alexeyyuditsky.cardatastorage.presentation.cars.CarUi
-import com.alexeyyuditsky.cardatastorage.presentation.cars.FragmentRouter
+import com.alexeyyuditsky.cardatastorage.presentation.cars.TextMapper
 import com.alexeyyuditsky.cardatastorage.presentation.cars.adapters.CarsAdapter
 import com.alexeyyuditsky.cardatastorage.presentation.cars.screens.editcar.EditCarDialogFragment
+import com.alexeyyuditsky.cardatastorage.presentation.cars.screens.fullscreencar.FullscreenDialogFragment
 import com.alexeyyuditsky.cardatastorage.presentation.cars.screens.newcar.NewCarDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
@@ -38,7 +36,6 @@ var isFilter = false
 class CarsFragment : Fragment(R.layout.fragment_cars) {
 
     private val viewModel by viewModels<CarsViewModel>()
-    private val fragmentRouter get() = (requireActivity() as FragmentRouter)
 
     private var _binding: FragmentCarsBinding? = null
     private val binding get() = _binding!!
@@ -101,7 +98,12 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
     private fun setupRecyclerView(): CarsAdapter {
         val carsAdapter = CarsAdapter(
             retryClickListener = { viewModel.fetchAllCars() },
-            imageClickListener = { uri: String -> fragmentRouter.showFullscreenDialog(uri) }
+            imageClickListener = { uri: String ->
+                findNavController().navigate(
+                    R.id.action_carsFragment_to_fullscreenDialogFragment,
+                    bundleOf(FullscreenDialogFragment.KEY_URI to uri)
+                )
+            }
         )
 
         binding.recyclerView.adapter = carsAdapter
@@ -113,7 +115,7 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
 
     private fun floatButtonListener() {
         binding.addCarFloatButton.setOnClickListener {
-            fragmentRouter.showNewCarDialog()
+            findNavController().navigate(R.id.action_carsFragment_to_newCarDialogFragment)
         }
     }
 
@@ -131,7 +133,21 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
             @SuppressLint("NotifyDataSetChanged")
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val car = viewHolder.itemView.tag as? CarUi ?: return
-                fragmentRouter.showEditCarDialog(car)
+                val carArgs = Array<String?>(6) { null }
+                car.map(object : TextMapper {
+                    override fun map(vararg a: Any) {
+                        carArgs[0] = a[0].toString()
+                        carArgs[1] = a[1].toString()
+                        carArgs[2] = a[2].toString()
+                        carArgs[3] = a[3].toString()
+                        carArgs[4] = a[4].toString()
+                        carArgs[5] = a[5].toString()
+                    }
+                })
+                findNavController().navigate(
+                    R.id.action_carsFragment_to_editCarDialogFragment,
+                    bundleOf(Const.KEY_ARGS_CAR to carArgs)
+                )
                 carsAdapter.notifyDataSetChanged()
             }
 
@@ -159,13 +175,14 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
         parentFragmentManager.setFragmentResultListener(
             EditCarDialogFragment.REQUEST_KEY, this
         ) { _, result ->
+            val carArgs = result.getStringArray(Const.KEY_ARGS_CAR)!!
             viewModel.updateCar(
-                id = result.getLong(KEY_ID),
-                model = result.getString(KEY_MODEL, ""),
-                color = result.getString(KEY_COLOR, ""),
-                speed = result.getInt(KEY_SPEED),
-                hp = result.getInt(KEY_HP),
-                image = result.getString(KEY_IMAGE, ""),
+                id = carArgs[0].toLong(),
+                model = carArgs[1],
+                color = carArgs[2],
+                speed = carArgs[3].toInt(),
+                hp = carArgs[4].toInt(),
+                image = carArgs[5],
             )
             checkBoxObserver()
         }
@@ -175,12 +192,13 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
         parentFragmentManager.setFragmentResultListener(
             NewCarDialogFragment.REQUEST_KEY, this
         ) { _, result ->
+            val carArgs = result.getStringArray(Const.KEY_ARGS_CAR)!!
             viewModel.addNewCar(
-                model = result.getString(KEY_MODEL, ""),
-                color = result.getString(KEY_COLOR, ""),
-                speed = result.getInt(KEY_SPEED),
-                hp = result.getInt(KEY_HP),
-                image = result.getString(KEY_IMAGE, ""),
+                model = carArgs[0],
+                color = carArgs[1],
+                speed = carArgs[2].toInt(),
+                hp = carArgs[3].toInt(),
+                image = carArgs[4],
             )
             checkBoxObserver()
         }
