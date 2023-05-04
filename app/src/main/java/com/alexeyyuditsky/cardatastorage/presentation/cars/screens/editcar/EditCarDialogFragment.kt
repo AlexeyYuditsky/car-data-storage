@@ -6,9 +6,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import com.alexeyyuditsky.cardatastorage.R
-import com.alexeyyuditsky.cardatastorage.core.Const
-import com.alexeyyuditsky.cardatastorage.core.Const.KEY_MODEL
 import com.alexeyyuditsky.cardatastorage.presentation.cars.screens.base.BaseCarDialogFragment
+import com.alexeyyuditsky.cardatastorage.presentation.cars.screens.main.CarsFragment.Companion.KEY_CAR_ARGS
 import kotlin.properties.Delegates
 
 class EditCarDialogFragment : BaseCarDialogFragment() {
@@ -37,7 +36,7 @@ class EditCarDialogFragment : BaseCarDialogFragment() {
 
         parentFragmentManager.setFragmentResult(
             REQUEST_KEY,
-            bundleOf(Const.KEY_ARGS_CAR to carArgs)
+            bundleOf(KEY_CAR_ARGS to carArgs)
         )
     }
 
@@ -47,7 +46,7 @@ class EditCarDialogFragment : BaseCarDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val carArgs = requireArguments().getStringArray(Const.KEY_ARGS_CAR)!!
+        val carArgs = requireArguments().getStringArray(KEY_CAR_ARGS)!!
         carId = carArgs[0]
         binding.modelInputEditText.setText(carArgs[1])
         binding.colorInputEditText.setText(carArgs[2])
@@ -57,6 +56,7 @@ class EditCarDialogFragment : BaseCarDialogFragment() {
     }
 
     companion object {
+        private const val KEY_MODEL = "model"
         const val REQUEST_KEY = "editCarDialogRequestKey"
     }
 

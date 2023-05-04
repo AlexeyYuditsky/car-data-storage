@@ -4,8 +4,8 @@ import android.content.DialogInterface
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import com.alexeyyuditsky.cardatastorage.R
-import com.alexeyyuditsky.cardatastorage.core.Const
 import com.alexeyyuditsky.cardatastorage.presentation.cars.screens.base.BaseCarDialogFragment
+import com.alexeyyuditsky.cardatastorage.presentation.cars.screens.main.CarsFragment.Companion.KEY_CAR_ARGS
 
 class NewCarDialogFragment : BaseCarDialogFragment() {
 
@@ -27,7 +27,7 @@ class NewCarDialogFragment : BaseCarDialogFragment() {
 
         parentFragmentManager.setFragmentResult(
             REQUEST_KEY,
-            bundleOf(Const.KEY_ARGS_CAR to carArgs)
+            bundleOf(KEY_CAR_ARGS to carArgs)
         )
     }
 

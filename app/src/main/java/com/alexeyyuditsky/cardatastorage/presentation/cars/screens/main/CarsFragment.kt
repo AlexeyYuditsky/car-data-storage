@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.alexeyyuditsky.cardatastorage.R
-import com.alexeyyuditsky.cardatastorage.core.Const
 import com.alexeyyuditsky.cardatastorage.databinding.FragmentCarsBinding
 import com.alexeyyuditsky.cardatastorage.presentation.cars.CarUi
 import com.alexeyyuditsky.cardatastorage.presentation.cars.TextMapper
@@ -28,9 +27,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
-var isSort = false
-var isFilter = false
 
 @AndroidEntryPoint
 class CarsFragment : Fragment(R.layout.fragment_cars) {
@@ -79,7 +75,6 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
     }
 
     private fun checkBoxObserver() {
-
         lifecycleScope.launch {
             delay(100)
             if (isSort && isFilter) {
@@ -146,7 +141,7 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
                 })
                 findNavController().navigate(
                     R.id.action_carsFragment_to_editCarDialogFragment,
-                    bundleOf(Const.KEY_ARGS_CAR to carArgs)
+                    bundleOf(KEY_CAR_ARGS to carArgs)
                 )
                 carsAdapter.notifyDataSetChanged()
             }
@@ -160,7 +155,15 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
                 actionState: Int,
                 isCurrentlyActive: Boolean,
             ) {
-                RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                RecyclerViewSwipeDecorator.Builder(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
                     .addBackgroundColor(ContextCompat.getColor(requireContext(), R.color.my_background))
                     .addActionIcon(R.drawable.ic_edit)
                     .create()
@@ -175,7 +178,7 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
         parentFragmentManager.setFragmentResultListener(
             EditCarDialogFragment.REQUEST_KEY, this
         ) { _, result ->
-            val carArgs = result.getStringArray(Const.KEY_ARGS_CAR)!!
+            val carArgs = result.getStringArray(KEY_CAR_ARGS)!!
             viewModel.updateCar(
                 id = carArgs[0].toLong(),
                 model = carArgs[1],
@@ -192,7 +195,7 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
         parentFragmentManager.setFragmentResultListener(
             NewCarDialogFragment.REQUEST_KEY, this
         ) { _, result ->
-            val carArgs = result.getStringArray(Const.KEY_ARGS_CAR)!!
+            val carArgs = result.getStringArray(KEY_CAR_ARGS)!!
             viewModel.addNewCar(
                 model = carArgs[0],
                 color = carArgs[1],
@@ -202,6 +205,12 @@ class CarsFragment : Fragment(R.layout.fragment_cars) {
             )
             checkBoxObserver()
         }
+    }
+
+    companion object {
+        const val KEY_CAR_ARGS = "carArgs"
+        private var isSort = false
+        private var isFilter = false
     }
 
 }
