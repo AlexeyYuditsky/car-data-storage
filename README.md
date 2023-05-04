@@ -4,7 +4,8 @@
 - Kotlin
 - MVVM
 - Clean architecture
-- Service locator
+- Hilt
+- Navigation component
 - Coroutines
 - LiveData
 - Room
